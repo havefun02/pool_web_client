@@ -6,30 +6,20 @@ function Pool() {
   const [poolInfo, setPoolInfo] = useState([
     {
       title: 'Pool Information',
-      numberOfMiners: 50,
-      numberOfActiveMiners: 40,
-      numberOfInactiveMiners: 10
-    },
-    {
-      title: 'Hash Rate',
-      hashRate: {
-        '2 Hours': '10 TH/s',
-        Week: '100 TH/s',
-        Total: '5000 TH/s'
-      }
-    },
-    {
-      title: 'Mining Statistics',
-      stats: {
-        Week: { blocksMined: 50, rewards: '100 BTC' },
-        Total: { blocksMined: 2000, rewards: '5000 BTC' }
-      }
+      miners: '123',
+      total_hashrate: 100,
+      balance: '123',
+      immature_balance: '123',
+      unconfirmed_balance: '123',
+      unit: 'BTC',
+      block_mined: '123',
+      reward: '123'
     }
   ]);
   const fetchPoolData = async () => {
     try {
-      const response = await axios.get('127.0.0.1:3001/api/pool'); // Adjust endpoint URL as per your server
-      setPoolInfo(response.data);
+      const response = await axios.get('http://127.0.0.1:3001/api/data'); // Adjust endpoint URL as per your server
+      setPoolInfo(response.data.data);
     } catch (error) {
       console.error('Error fetching pool data:', error);
     }
@@ -48,35 +38,33 @@ function Pool() {
             <div className="card">
               <div className="card-body">
                 <h5 className="card-title">{info.title}</h5>
-                {info.hashRate && (
-                  <ul className="list-group list-group-flush">
-                    {Object.entries(info.hashRate).map(([period, rate]) => (
-                      <li key={period} className="list-group-item">
-                        {period}: {rate}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                {info.stats && (
-                  <ul className="list-group list-group-flush">
-                    {Object.entries(info.stats).map(([period, data]) => (
-                      <li key={period} className="list-group-item">
-                        {period}: Blocks Mined: {data.blocksMined}, Rewards:{' '}
-                        {data.rewards}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                {info.numberOfMiners && (
+                {info.miners && (
                   <ul className="list-group list-group-flush">
                     <li className="list-group-item">
-                      Number of Miners: {info.numberOfMiners}
+                      Number of miners: {info.miners}
+                    </li>
+
+                    <li className="list-group-item">
+                      Pool's Hashrate: {info.total_hashrate}
+                    </li>
+
+                    <li className="list-group-item">
+                      Balance: {info.balance} {info.unit}
+                    </li>
+
+                    <li className="list-group-item">
+                      Immature balance: {info.immature_balance} {info.unit}
+                    </li>
+
+                    <li className="list-group-item">
+                      Unconfirmed balance: {info.unconfirmed_balance}{' '}
+                      {info.unit}
                     </li>
                     <li className="list-group-item">
-                      Number of Active Miners: {info.numberOfActiveMiners}
+                      Total block mined: {info.block_mined}
                     </li>
                     <li className="list-group-item">
-                      Number of Inactive Miners: {info.numberOfInactiveMiners}
+                      Total reward: {info.reward}
                     </li>
                   </ul>
                 )}

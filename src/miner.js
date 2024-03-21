@@ -7,6 +7,7 @@ function Miner() {
   const [minerInfo, setMinerInfo] = useState([
     {
       title: 'Hash Rate and Rewards',
+      current_target: '123',
       stats: {
         Week: { hashRate: '10 TH/s', rewards: '100 BTC' },
         Month: { hashRate: '50 TH/s', rewards: '500 BTC' },
@@ -17,8 +18,8 @@ function Miner() {
 
   const fetchMinerData = async () => {
     try {
-      const response = await axios.get('127.0.0.1:3001/api/data/:id'); // Adjust endpoint URL as per your server
-      setMinerInfo(response.data);
+      const response = await axios.get('/api/data/:123'); // Adjust endpoint URL as per your server
+      setMinerInfo(response.data.data);
     } catch (error) {
       console.error('Error fetching miner data:', error);
     }
@@ -37,16 +38,21 @@ function Miner() {
             <div className="card">
               <div className="card-body">
                 <h5 className="card-title">{info.title}</h5>
-                {info.stats && (
-                  <ul className="list-group list-group-flush">
-                    {Object.entries(info.stats).map(([period, data]) => (
-                      <li key={period} className="list-group-item">
-                        {period}: Hash Rate: {data.hashRate}, Rewards:{' '}
-                        {data.rewards}
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <ul className="list-group list-group-flush">
+                  <li className="list-group-item">
+                    Current target: {info.current_target}
+                  </li>
+                  {info.stats && (
+                    <>
+                      {Object.entries(info.stats).map(([period, data]) => (
+                        <li key={period} className="list-group-item">
+                          {period}: Hash Rate: {data.hashRate}, Rewards:{' '}
+                          {data.rewards}
+                        </li>
+                      ))}
+                    </>
+                  )}
+                </ul>
               </div>
             </div>
           </div>
