@@ -5,20 +5,21 @@ function Pool() {
   // Dummy data representing pool information
   const [poolInfo, setPoolInfo] = useState([
     {
-      title: 'Pool Information',
-      miners: '123',
-      total_hashrate: 100,
-      balance: '123',
-      immature_balance: '123',
-      unconfirmed_balance: '123',
-      unit: 'BTC',
-      block_mined: '123',
-      reward: '123'
+      // title: 'Pool Information',
+      // miners: '123',
+      // total_hashrate: 100,
+      // balance: '123',
+      // immature_balance: '123',
+      // unconfirmed_balance: '123',
+      // unit: 'BTC',
+      // block_mined: '123',
+      // reward: '123'
     }
   ]);
   const fetchPoolData = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:3001/api/data'); // Adjust endpoint URL as per your server
+      const response = await axios.get('http://127.0.0.1:3001/users/data'); // Adjust endpoint URL as per your server
+      console.log(response);
       setPoolInfo(response.data.data);
     } catch (error) {
       console.error('Error fetching pool data:', error);
